@@ -14,7 +14,7 @@ ms dream theater octavarium
 ```
 $ ms <phare to search on youtube>
 ```
-⋅⋅*while music is running you can select the next song with ```v``` and start playing
-⋅⋅*while music is running you can select the next song with ```b``` without starting it
-⋅⋅*while music is skip to next song on youtube search ```c```
-⋅⋅*```x``` to exit
+⋅⋅* while music is running you can select the next song with ```v``` and start playing
+⋅⋅* while music is running you can select the next song with ```b``` without starting it
+⋅⋅* while music is skip to next song on youtube search ```c```
+⋅⋅* ```x``` to exit
