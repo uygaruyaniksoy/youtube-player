@@ -1,5 +1,5 @@
 #!/bin/bash
-PROJECTDIR=~/Project/music-player
+PWD=$PWD
 trap ctrl_c INT
 function ctrl_c() {
   # read -rsn1 -t 1
@@ -11,9 +11,7 @@ kill -9 -INT $(pgrep music-player.sh | grep -v $$) &>/dev/null
 kill -9 -INT $(pgrep youtube-dl) &>/dev/null
 kill -9 -INT $(pgrep mplayer) &>/dev/null
 
-
-PWD=$(pwd)
-cd $PROJECTDIR/Musics
+cd $PWD/Musics
 QUERY=$(echo $@ | sed 's/ /+/g')
 RES=$(curl -s -X GET "https://www.googleapis.com/youtube/v3/search?q=${QUERY}&part=snippet&type=video&key=AIzaSyA1MaLuAPezFAxRQiK07nNZGv6Gl2MuVoQ&maxResults=50")
 YT_ID=$(echo $RES | jq -r .items[0].id.videoId)
@@ -48,7 +46,7 @@ while true; do
     # c - next song
     # v - menu
     if [ "$REPLY" = "x" ]; then
-      rm $PROJECTDIR/Musics/* &>/dev/null
+      rm $PWD/Musics/* &>/dev/null
       PROMPT_COMMAND='echo -ne "\033]0; $(pwd)\007"'
       killall -9 -INT youtube-dl &>/dev/null
       killall -9 -INT mplayer &>/dev/null
@@ -60,7 +58,7 @@ while true; do
     if [ "$REPLY" = "v" ]; then
       # redirect mplayer output
       printf 'p close(1)\np open("/dev/null", 1)\np close(2)\np open("/dev/null", 1)\nq\n' | gdb -p $MPPID &>/dev/null
-      node "$PROJECTDIR/yt-selection.js" $RES
+      node "$PWD/yt-selection.js" $RES
       printf 'p close(1)\np open("/dev/pts/0", 1)\np close(2)\np open("/dev/pts/0", 1)\nq\n' | gdb -p $MPPID &>/dev/null
       MUSIC_NAME=$(cat tmp.txt | head -1)
       YT_ID=$(cat tmp.txt | tail -1)
@@ -71,7 +69,7 @@ while true; do
     if [ "$REPLY" = "b" ]; then
       # redirect mplayer output
       printf 'p close(1)\np open("/dev/null", 1)\np close(2)\np open("/dev/null", 1)\nq\n' | gdb -p $MPPID &>/dev/null
-      node "$PROJECTDIR/yt-selection.js" $RES
+      node "$PWD/yt-selection.js" $RES
       printf 'p close(1)\np open("/dev/pts/0", 1)\np close(2)\np open("/dev/pts/0", 1)\nq\n' | gdb -p $MPPID &>/dev/null
       MUSIC_NAME=$(cat tmp.txt | head -1)
       YT_ID=$(cat tmp.txt | tail -1)
