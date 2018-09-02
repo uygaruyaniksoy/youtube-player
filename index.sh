@@ -1,5 +1,6 @@
 #!/bin/bash
 PWD=$PWD
+API_KEY=$(cat API_KEY)
 trap ctrl_c INT
 function ctrl_c() {
   # read -rsn1 -t 1
@@ -13,14 +14,14 @@ kill -9 -INT $(pgrep mplayer) &>/dev/null
 
 cd $PWD/Musics
 QUERY=$(echo $@ | sed 's/ /+/g')
-RES=$(curl -s -X GET "https://www.googleapis.com/youtube/v3/search?q=${QUERY}&part=snippet&type=video&key=AIzaSyA1MaLuAPezFAxRQiK07nNZGv6Gl2MuVoQ&maxResults=50")
+RES=$(curl -s -X GET "https://www.googleapis.com/youtube/v3/search?q=${QUERY}&part=snippet&type=video&key=API_KEY&maxResults=50")
 YT_ID=$(echo $RES | jq -r .items[0].id.videoId)
 
 HISTORY[0]="$YT_ID"
 IDX=1
 MUSIC_NAME=$(echo $RES | jq -r .items[0].snippet.title)
 while true; do
-  RES=$(curl -s -X GET "https://www.googleapis.com/youtube/v3/search?q=${QUERY}&relatedToVideoId=${YT_ID}&part=snippet&type=video&key=AIzaSyA1MaLuAPezFAxRQiK07nNZGv6Gl2MuVoQ&maxResults=50")
+  RES=$(curl -s -X GET "https://www.googleapis.com/youtube/v3/search?q=${QUERY}&relatedToVideoId=${YT_ID}&part=snippet&type=video&key=API_KEY&maxResults=50")
 
   echo ""
   echo "Now playing: " $MUSIC_NAME
