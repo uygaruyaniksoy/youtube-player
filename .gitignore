@@ -1,1 +1,4 @@
+node_modules
 Musics
+*.lock
+*.out

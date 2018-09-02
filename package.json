@@ -1,0 +1,15 @@
+{
+  "name": "music-player",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./music-player.sh",
+  "scripts": {
+    "start": "./music-player.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "blessed": "^0.1.81"
+  }
+}
